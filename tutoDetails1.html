@@ -259,10 +259,10 @@
                     <i class="fas fa-share-alt text-xl"></i>
                 </button>
             </div>
-            <!-- <button class="bg-navy text-white px-6 py-3 rounded-full 
+            <button id="startLearning" class="bg-navy text-white px-6 py-3 rounded-full 
                         hover:bg-green-700 active:scale-95 transition-all">
                 立即学习
-            </button> -->
+            </button> 
         </div>
     </div>
 
@@ -277,15 +277,16 @@
     // 目录交互,点击事件
     let videoPlayerInstance = null;
 
-    document.querySelectorAll('.bg-gray-50').forEach(item => {
-        item.addEventListener('click', function(event) {
-            // 仅当点击目录项主体时触发（排除内部元素）
-            if (!event.target.closest('.lesson-item')) return;
-            
-            if (!videoPlayerInstance) {
-                createVideoPlayer();
-            }
-        });
+    // 新增：立即学习按钮事件绑定
+    document.getElementById('startLearning').addEventListener('click', function() {
+        if (!videoPlayerInstance) {
+            createVideoPlayer();
+            // 自动开始播放
+            setTimeout(() => {
+                const video = document.querySelector('video');
+                if(video) video.play();
+            }, 500);
+        }
     });
 
     function createVideoPlayer() {
@@ -300,7 +301,7 @@
                         <i class="fas fa-times text-gray-600"></i>
                     </button>
                     <video class="w-full rounded-lg" controls>
-                        <source src="sample.mp4" type="video/mp4">
+                        <source src="videos/Never Gonna Give You Up.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -336,7 +337,3 @@
     </script>
 </body>
 </html>
-
-<!-- 
-
--->

@@ -349,12 +349,81 @@
                 <i class="fas fa-share-alt text-xl"></i>
             </button>
         </div>
-        <!-- <button class="bg-navy text-white px-8 py-3 rounded-full 
+        <button id="startLearning" class="bg-navy text-white px-8 py-3 rounded-full 
                     hover:bg-green-700 active:scale-95 transition-all">
             开始学习
-        </button> -->
+        </button>
+        </div>
     </div>
 </div>
-</div>
+    <script>
+    // 收藏功能
+    document.querySelector('.fa-star').addEventListener('click', function() {
+        this.classList.toggle('fas');
+        this.classList.toggle('far');
+        this.style.color = this.classList.contains('fas') ? '#ffd700' : '';
+    });
+
+    // 目录交互,点击事件
+    let videoPlayerInstance = null;
+
+    // 新增：立即学习按钮事件绑定
+    document.getElementById('startLearning').addEventListener('click', function() {
+        if (!videoPlayerInstance) {
+            createVideoPlayer();
+            // 自动开始播放
+            setTimeout(() => {
+                const video = document.querySelector('video');
+                if(video) video.play();
+            }, 500);
+        }
+    });
+
+    function createVideoPlayer() {
+        videoPlayerInstance = document.createElement('div');
+        videoPlayerInstance.innerHTML = `
+            <div class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"
+                onclick="handleVideoClick(event)">
+                <div class="bg-white rounded-xl w-full max-w-2xl p-4 relative">
+                    <button class="absolute -top-3 -right-3 bg-white rounded-full p-2 shadow-lg
+                                hover:bg-gray-100 transition-colors"
+                            onclick="closeVideoPlayer(event)">
+                        <i class="fas fa-times text-gray-600"></i>
+                    </button>
+                    <video class="w-full rounded-lg" controls>
+                        <source src="videos/Never Gonna Give You Up.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(videoPlayerInstance);
+    }
+
+    // 修复后的关闭逻辑
+    function closeVideoPlayer(event) {
+        event.stopPropagation(); // 阻止事件冒泡
+        if (videoPlayerInstance) {
+            const video = videoPlayerInstance.querySelector('video');
+            video.pause();
+            video.currentTime = 0;
+            videoPlayerInstance.remove();
+            videoPlayerInstance = null;
+        }
+    }
+
+    // 优化遮罩层点击判断
+    function handleVideoClick(event) {
+        if (event.target === videoPlayerInstance?.firstElementChild) {
+            closeVideoPlayer(event);
+        }
+    }
+
+    // ESC关闭优化
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoPlayerInstance) {
+            closeVideoPlayer(e);
+        }
+    });
+    </script>
 </body>
 </html>
