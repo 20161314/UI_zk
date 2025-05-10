@@ -527,7 +527,7 @@ async function callCozeWorkflow(productData) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer pat_az9rZGVfYKSvVvW9jgVaEHFD1qkJ76Djd9YRD2wgHBI5h5wQU0UfxjiyfITdGUVm'
+                'Authorization': 'pat_RPTiZKKPeJltrdxulFNMc3lquYb3XNvm9MZYIBMdtAKZJ5adyjyIkDsxqpJhMrSD'
             },
             body: JSON.stringify({
                 workflow_id: '7497171481404244006',
